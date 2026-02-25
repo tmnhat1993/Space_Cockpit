@@ -53,5 +53,5 @@ Space_Cockpit/
 ## Ghi chú
 
 - HTML vẫn dùng `onclick="setLight('blue')"`, `onclick="addYT()"`, …; các hàm này được gán từ module lên `window` trong `main.js`.
-- Dùng ảnh: đặt file trong `src/assets/images/` rồi `import url from './assets/images/xxx.png'` trong JS, hoặc đặt trong `public/` và dùng đường dẫn `/xxx.png`.
-- **Nền canvas vũ trụ**: đặt `universe-bg.jpg` vào thư mục `public/`. Ứng dụng sẽ dùng ảnh này làm nền chính cho canvas (scale cover); nếu không có file thì dùng gradient mặc định.
+- Dùng ảnh: đặt file trong `src/assets/images/` rồi `import url from '../assets/images/xxx.png'` trong JS (từ `src/js/`), hoặc đặt trong `public/` và dùng đường dẫn `/xxx.png`. Ảnh trong `src/assets/images/` được Vite bundle vào `dist/assets/` khi build.
+- **Nền canvas vũ trụ**: đặt `universe-bg.jpg` trong `src/assets/images/`. Ứng dụng import và dùng làm nền chính cho canvas (scale cover + animation nghiêng nhẹ); khi `npm run build`, ảnh được copy vào `dist/assets/` cùng với JS/CSS.

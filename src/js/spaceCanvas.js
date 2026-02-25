@@ -4,6 +4,7 @@
  */
 
 import { Application, Container, Graphics, Sprite, Texture } from 'pixi.js';
+import universeBgUrl from '../assets/images/universe-bg.jpg';
 
 // --- Cấu hình chiếu 3D → 2D ---
 const FOCAL = 600;
@@ -224,7 +225,7 @@ let planetTextures = null;
 let useImageBackground = false;
 
 const STAR_COUNT = 480;
-const UNIVERSE_BG_URL = '/universe-bg.jpg';
+const UNIVERSE_BG_URL = universeBgUrl;
 /** Nền ảnh phóng to thêm để khi nghiêng không lộ góc; animation nghiêng ± độ */
 const BG_OVERSCALE = 1.15;
 const BG_TILT_DEG = 2.2;
