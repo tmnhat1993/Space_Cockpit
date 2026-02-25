@@ -18,6 +18,17 @@ npm run build  # output: dist/
 npm run preview # xem bản build
 ```
 
+### Deploy (base path / prefix assets)
+
+Khi deploy vào thư mục con (vd: GitHub Pages `https://user.github.io/repo/dist/`), cần cấu hình **base path** để JS/CSS/assets load đúng.
+
+- **Cấu hình:** chỉnh `VITE_BASE_PATH` trong **`.env.production`** (hoặc copy từ `.env.example`).
+- **Ví dụ hiện tại:** deploy tại `https://tmnhat1993.github.io/Space_Cockpit/dist/` → trong `.env.production` đặt:
+  ```bash
+  VITE_BASE_PATH=/Space_Cockpit/dist/
+  ```
+- Sau đó chạy `npm run build`; file trong `dist/` sẽ dùng đường dẫn dạng `/Space_Cockpit/dist/assets/...`. Deploy nguyên nội dung thư mục `dist/` lên đúng path tương ứng trên server.
+
 ## Cấu trúc thư mục
 
 ```
