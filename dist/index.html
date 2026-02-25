@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Space Cockpit</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/Space_Cockpit/dist/assets/index-6a8f2f3a.js"></script>
-  <link rel="stylesheet" href="/Space_Cockpit/dist/assets/index-b7516ed5.css">
+  <script type="module" crossorigin src="/Space_Cockpit/dist/assets/index-391a7243.js"></script>
+  <link rel="stylesheet" href="/Space_Cockpit/dist/assets/index-cb866434.css">
 </head>
 <body>
 
@@ -35,6 +35,9 @@
     <span class="hud-indicator" id="hudFuel">FUEL: 94%</span>
   </div>
 </div>
+
+<!-- Nút fullscreen: góc trên bên phải -->
+<button type="button" id="btnFullscreen" class="btn-fullscreen" title="Toàn màn hình" onclick="toggleFullscreen()" aria-label="Bật toàn màn hình"><span class="btn-fullscreen__icon">⤢</span><span class="btn-fullscreen__label">Thoát</span></button>
 
 <!-- HUD DATA -->
 <div id="greeting"></div>
@@ -109,36 +112,52 @@
           <button class="light-btn green" onclick="setLight('green')">Green</button>
           <button class="light-btn red" onclick="setLight('red')">Red</button>
           <button class="light-btn purple" onclick="setLight('purple')">Purple</button>
+          <button class="light-btn pink" onclick="setLight('pink')">Pink</button>
         </div>
       </div>
     </div>
 
-    <!-- PANEL 2: YOUTUBE (player một bên + bảng điều khiển 48px) -->
+    <!-- PANEL 2: YOUTUBE — cột trái (player lớn) + cột phải (nút dọc) + drawer playlist -->
     <div class="console-panel console-panel-yt">
       <div class="panel-title">Hệ Thống Âm Thanh</div>
-      <div class="yt-player-side">
-        <div id="ytPlayerArea" class="no-video">— KHÔNG CÓ TÍN HIỆU —</div>
-        <div class="yt-control-bar" id="ytControlBar">
-          <button type="button" class="yt-ctrl-btn" id="ytBtnNext" title="Chọn bài khác" onclick="nextYT()">⏭</button>
-          <button type="button" class="yt-ctrl-btn" id="ytBtnPause" title="Tạm dừng / Phát" onclick="togglePauseYT()">⏸</button>
-          <button type="button" class="yt-ctrl-btn yt-ctrl-btn-danger" id="ytBtnDelete" title="Xóa clip đang phát" onclick="removeCurrentYT()">✕</button>
+      <div class="yt-panel-row">
+        <div class="yt-panel-left">
+          <div class="yt-player-side">
+            <div id="ytPlayerArea" class="no-video">— KHÔNG CÓ TÍN HIỆU —</div>
+          </div>
+          <div class="yt-input-row">
+            <input class="yt-input" id="ytInput" placeholder="Nhập link YouTube hoặc Video ID..." />
+            <button class="btn-sm" onclick="addYT()">+ Thêm</button>
+          </div>
+        </div>
+        <div class="yt-panel-right">
+          <button type="button" class="yt-ctrl-btn yt-ctrl-btn-stack" id="ytBtnNext" title="Chọn bài khác" onclick="nextYT()">⏭</button>
+          <button type="button" class="yt-ctrl-btn yt-ctrl-btn-stack" id="ytBtnPause" title="Tạm dừng / Phát" onclick="togglePauseYT()">⏸</button>
+          <button type="button" class="yt-ctrl-btn yt-ctrl-btn-danger yt-ctrl-btn-stack" id="ytBtnDelete" title="Xóa clip đang phát" onclick="removeCurrentYT()">✕</button>
+          <button type="button" class="yt-ctrl-btn yt-ctrl-btn-stack" id="ytBtnPlaylist" title="Playlist" onclick="toggleYTDrawer()">☰</button>
         </div>
       </div>
-      <div class="yt-input-row" style="margin-top:4px">
-        <input class="yt-input" id="ytInput" placeholder="Nhập link YouTube hoặc Video ID..." />
-        <button class="btn-sm" onclick="addYT()">+ Thêm</button>
+      <div class="yt-drawer-overlay" id="ytDrawerOverlay" aria-hidden="true" onclick="toggleYTDrawer()"></div>
+      <div class="yt-drawer" id="ytDrawer" aria-label="Playlist">
+        <div class="yt-drawer__header">Playlist</div>
+        <div class="yt-list" id="ytList"></div>
       </div>
-      <div class="yt-list" id="ytList"></div>
     </div>
 
     <!-- PANEL 3: TODO -->
-    <div class="console-panel">
+    <div class="console-panel console-panel-todo">
       <div class="panel-title">Nhiệm Vụ Chuyến Bay</div>
       <div class="todo-input-row">
-        <input class="todo-input" id="todoInput" placeholder="Thêm nhiệm vụ mới..." onkeydown="if(event.key==='Enter')addTodo()" />
-        <button class="btn-sm" onclick="addTodo()">+</button>
+        <input class="todo-input" id="todoInput" placeholder="Thêm nhiệm vụ mới..." onkeydown="if(event.key==='Enter'&&!event.isComposing){event.preventDefault();addTodo();}" />
+        <button type="button" class="btn-sm" onclick="addTodo()">+</button>
       </div>
       <div class="todo-list" id="todoList"></div>
+      <button type="button" class="todo-manage-btn" onclick="toggleTodoDrawer()" title="Quản lý task">Quản lý task</button>
+      <div class="todo-drawer-overlay" id="todoDrawerOverlay" aria-hidden="true" onclick="toggleTodoDrawer()"></div>
+      <div class="todo-drawer" id="todoDrawer" aria-label="Quản lý nhiệm vụ">
+        <div class="todo-drawer__header">Quản lý nhiệm vụ</div>
+        <div class="todo-drawer__body" id="todoDrawerContent"></div>
+      </div>
     </div>
 
   </div>

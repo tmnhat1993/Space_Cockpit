@@ -7,6 +7,7 @@ export const lightThemes = {
   green: { accent: '#00ff88', accent2: '#00aa55', filter: 'rgba(0,60,20,0.08)' },
   red: { accent: '#ff3355', accent2: '#cc0030', filter: 'rgba(60,0,10,0.1)' },
   purple: { accent: '#cc44ff', accent2: '#8800cc', filter: 'rgba(40,0,60,0.1)' },
+  pink: { accent: '#ff69b4', accent2: '#ff1493', filter: 'rgba(60,0,30,0.08)' },
 };
 
 let currentLight = 'blue';

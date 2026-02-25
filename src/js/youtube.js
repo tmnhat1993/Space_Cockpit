@@ -88,11 +88,37 @@ function buildEmbedUrl(id, autoplay = true) {
 export function playYT(id) {
   currentYT = id;
   isPaused = false;
+  closeYTDrawer();
   const area = document.getElementById('ytPlayerArea');
   if (!area) return;
   area.outerHTML = `<div id="ytPlayerArea" class="yt-player-wrap"><iframe src="${buildEmbedUrl(id, true)}" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
   renderYT();
   updatePauseButtonLabel();
+}
+
+let ytDrawerOpen = false;
+
+export function toggleYTDrawer() {
+  ytDrawerOpen = !ytDrawerOpen;
+  const drawer = document.getElementById('ytDrawer');
+  const overlay = document.getElementById('ytDrawerOverlay');
+  if (drawer) drawer.classList.toggle('is-open', ytDrawerOpen);
+  if (overlay) {
+    overlay.classList.toggle('is-visible', ytDrawerOpen);
+    overlay.setAttribute('aria-hidden', !ytDrawerOpen);
+  }
+}
+
+export function closeYTDrawer() {
+  if (!ytDrawerOpen) return;
+  ytDrawerOpen = false;
+  const drawer = document.getElementById('ytDrawer');
+  const overlay = document.getElementById('ytDrawerOverlay');
+  if (drawer) drawer.classList.remove('is-open');
+  if (overlay) {
+    overlay.classList.remove('is-visible');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
 }
 
 export function nextYT() {
