@@ -1,0 +1,57 @@
+# Space Cockpit
+
+Chill app mô phỏng quá trình bay trong không gian: canvas sao/hành tinh/tiểu hành tinh, panel YouTube, quản lý task, đèn môi trường (theme).
+
+## Môi trường dev
+
+- **ES6**: modules trong `src/js/`
+- **SCSS**: styles trong `src/scss/`
+- **Ảnh/assets**: `src/assets/images/`
+- **Build**: Vite (dev + production), **PixiJS** cho layer không gian (canvas)
+
+### Lệnh
+
+```bash
+npm install
+npm run dev    # http://localhost:5173
+npm run build  # output: dist/
+npm run preview # xem bản build
+```
+
+## Cấu trúc thư mục
+
+```
+Space_Cockpit/
+├── index.html              # Entry HTML (markup only)
+├── package.json
+├── vite.config.js
+├── src/
+│   ├── main.js             # Entry JS: import SCSS + các module, gán window.* cho onclick
+│   ├── scss/
+│   │   ├── main.scss       # Import tất cả partial
+│   │   ├── _variables.scss  # CSS custom properties
+│   │   ├── _base.scss      # Reset, body
+│   │   ├── _space.scss     # #spaceCanvas
+│   │   ├── _cockpit.scss    # Cockpit glass, HUD, corners, greeting, colorFilter, ytFloat
+│   │   ├── _console.scss   # Console 3 panel: clock, lights, YouTube, TODO
+│   │   └── _onboarding.scss
+│   ├── js/
+│   │   ├── app.js          # boot(), gọi startSpaceCanvas, startHUD, startClock, initCockpit, speed animation
+│   │   ├── spaceCanvas.js  # PixiJS: stars, planets, asteroids, nebulae, layers, setSpaceSpeed/getSpaceSpeed
+│   │   ├── hud.js          # updateHUD, startHUD
+│   │   ├── clock.js        # updateClock, startClock
+│   │   ├── lights.js       # setLight, lightThemes
+│   │   ├── youtube.js      # ytTracks, addYT, playYT, removeYT, renderYT
+│   │   ├── todo.js         # todos, addTodo, toggleTodo, deleteTodo, renderTodos
+│   │   └── onboarding.js   # startCockpit, initCockpit
+│   └── assets/
+│       └── images/         # Đặt ảnh tại đây (import trong JS/SCSS hoặc public)
+├── public/                 # Static files (copy nguyên vào dist)
+└── dist/                   # Output sau npm run build
+```
+
+## Ghi chú
+
+- HTML vẫn dùng `onclick="setLight('blue')"`, `onclick="addYT()"`, …; các hàm này được gán từ module lên `window` trong `main.js`.
+- Dùng ảnh: đặt file trong `src/assets/images/` rồi `import url from './assets/images/xxx.png'` trong JS, hoặc đặt trong `public/` và dùng đường dẫn `/xxx.png`.
+- **Nền canvas vũ trụ**: đặt `universe-bg.jpg` vào thư mục `public/`. Ứng dụng sẽ dùng ảnh này làm nền chính cho canvas (scale cover); nếu không có file thì dùng gradient mặc định.
